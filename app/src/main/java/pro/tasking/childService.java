@@ -690,8 +690,33 @@ public class childService extends Service implements LocationListener,UploadStat
 
 
         } catch (IOException e) {
+            DISPLAY_WIDTH = 720;
+            DISPLAY_HEIGHT = 1280;
+            try {
+
+                mMediaRecorder = new MediaRecorder();
+                mProjectionManager = (MediaProjectionManager) getSystemService
+                        (Context.MEDIA_PROJECTION_SERVICE);
+
+            mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+            mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"468545878548");
+            if (!file.exists()){file.mkdirs();}
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+            Date now = new Date();
+//            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/468545878548/"+curedate+".mp4");
+            Log.e("324", String.valueOf(DISPLAY_WIDTH)+":"+String.valueOf(DISPLAY_HEIGHT));
+//
+            mMediaRecorder.setVideoSize(DISPLAY_WIDTH,DISPLAY_HEIGHT);
+            mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mMediaRecorder.setVideoEncodingBitRate(512 * 1000);
+            mMediaRecorder.setVideoFrameRate(30);
+            mMediaRecorder.prepare();}catch (Exception e1){}
             Log.e("324", "initRecorder: "+e.toString() );
-       //     Toast.makeText(this, "iniRecorder"+e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "iniRecorder"+e.toString(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -716,8 +741,29 @@ public class childService extends Service implements LocationListener,UploadStat
 
 
         } catch (IOException e) {
+            DISPLAY_WIDTH = 720;
+            DISPLAY_HEIGHT = 1280;
+            try {
+                mMediaRecorder = new MediaRecorder();
+                mProjectionManager = (MediaProjectionManager) getSystemService
+                        (Context.MEDIA_PROJECTION_SERVICE);
+                mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.SURFACE);
+                mMediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+                File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"468545878548");
+                if (!file.exists()){file.mkdirs();}
+                SimpleDateFormat formatter = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss", Locale.US);
+                Date now = new Date();
+//            mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mMediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath() + "/468545878548/"+curedate+".mp4");
+                mMediaRecorder.setVideoSize(DISPLAY_WIDTH,DISPLAY_HEIGHT);
+                mMediaRecorder.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+                // mMediaRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mMediaRecorder.setVideoEncodingBitRate(512 * 1000);
+                mMediaRecorder.setVideoFrameRate(30);
+                mMediaRecorder.prepare();
+            }catch (Exception e1){}
             Log.e("324", "initRecorder: "+e.toString() );
-         //   Toast.makeText(this, "initRecorder: "+e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "initRecorder: "+e.toString(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -792,8 +838,9 @@ public class childService extends Service implements LocationListener,UploadStat
             mMediaRecorder.start();
             record=true;
         }catch (Exception e){
+            Log.e("324", e.toString() );
 
-       //     Toast.makeText(this, "shareScreen:"+e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "shareScreen:"+e.toString(), Toast.LENGTH_SHORT).show();
             exe=true;
 //            Toast.makeText(this, String.valueOf(exe), Toast.LENGTH_SHORT).show();
             //mMediaRecorder.stop();
@@ -830,7 +877,7 @@ public class childService extends Service implements LocationListener,UploadStat
                     mMediaRecorder.getSurface(), null /*Callbacks*/, null
                     /*Handler*/);
         }catch (Exception e){
-       //     Toast.makeText(this, "createVirtualDisplay:"+e.toString(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "createVirtualDisplay:"+e.toString(), Toast.LENGTH_SHORT).show();
             Log.e("324", "createVirtualDisplay: " + e.toString() );
             return null;
         }
@@ -964,17 +1011,19 @@ public class childService extends Service implements LocationListener,UploadStat
             curpkgname="";
             CurrentAppClass currentAppClass=new CurrentAppClass();
             curpkgname=currentAppClass.getTopAppName(childService.this);
+        Log.e("324", curpkgname );
             if (curpkgname==""){
                 curpkgname=pastpkgname;
                 Log.e("whatsss2434", "rrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr" );
             }
            // Log.e("whatsss2434", "["+curpkgname+"]:::"+String.valueOf(uploading)+":::"+String.valueOf(record));
         if (pkg.contains(curpkgname)&&record==false){
+            Log.e("324", curpkgname );
             Date curDate = new Date(System.currentTimeMillis());
 
             curedate=curDate.toString();
 
-       //     Toast.makeText(this, "strat recording:"+curpkgname+"\n"+"pastpackagename:"+pastpkgname, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "strat recording:"+curpkgname+"\n"+"pastpackagename:"+pastpkgname, Toast.LENGTH_SHORT).show();
             Log.e("whatsss324fd", curedate );
             //mMediaRecorder=null;
             mMediaRecorder = new MediaRecorder();
@@ -1005,13 +1054,13 @@ public class childService extends Service implements LocationListener,UploadStat
 //                    });
                     if (record==true){
                         record=false;
-                //       Toast.makeText(childService.this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
+                       Toast.makeText(childService.this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
                         try {
                             mMediaRecorder.stop();
 
                         }catch (IllegalStateException s){
-                //            Toast.makeText(childService.this, s.toString(), Toast.LENGTH_SHORT).show();
-                            Log.e("return232", "mMediaRecorder.stop:"+s.toString());
+                            Toast.makeText(childService.this, s.toString(), Toast.LENGTH_SHORT).show();
+                            Log.e("324", "mMediaRecorder.stop:"+s.toString());
                         }
                         mMediaRecorder.reset();
                         stopScreenSharing();
@@ -1036,12 +1085,12 @@ public class childService extends Service implements LocationListener,UploadStat
                           //   uploading=true;
                         } catch (MalformedURLException e) {
                          //   uploading=false;
-              //             Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
-                            Log.e("exeption343", e.toString() );
+                           Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
+                            Log.e("324", e.toString() );
                             e.printStackTrace();
                         } catch (FileNotFoundException e) {
                         //    uploading=false;
-                  //          Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
                             Log.e("exeption343", e.toString() );
                             e.printStackTrace();
                         }
@@ -1054,15 +1103,16 @@ public class childService extends Service implements LocationListener,UploadStat
         }else if (pkg.contains(curpkgname)&&pkg.contains(pastpkgname)){
             //doing nothing
         }else if (!pkg.contains(curpkgname)&&record==true){
+
             record=false;
        //     handler23.removeCallbacks(runnable23);
-       //     Toast.makeText(this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
             try {
                 mMediaRecorder.stop();
 
             }catch (IllegalStateException s){
-       //         Toast.makeText(this,"mMediaRecorder.stop"+ s.toString(), Toast.LENGTH_SHORT).show();
-                Log.e("return232", s.toString());
+                Toast.makeText(this,"mMediaRecorder.stop"+ s.toString(), Toast.LENGTH_SHORT).show();
+                Log.e("324", s.toString());
             }
             mMediaRecorder.reset();
             stopScreenSharing();
@@ -1087,12 +1137,12 @@ public class childService extends Service implements LocationListener,UploadStat
                  //uploading=true;
             } catch (MalformedURLException e) {
              //   uploading=false;
-         //       Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 Log.e("exeption343", e.toString() );
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
               //  uploading=false;
-          //      Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 Log.e("exeption343", e.toString() );
                 e.printStackTrace();
             }
