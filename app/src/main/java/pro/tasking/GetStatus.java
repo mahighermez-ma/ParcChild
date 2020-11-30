@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.SystemClock;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Cache;
 import com.android.volley.Network;
@@ -71,6 +72,8 @@ public class GetStatus {
                     new Response.Listener<String>() {
                         @Override
                         public void onResponse(String response) {
+                            Log.e("rttredfgf", response);
+                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                             requestQueue.stop();
 
 

