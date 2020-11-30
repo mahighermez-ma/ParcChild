@@ -722,7 +722,7 @@ public class childService extends Service implements LocationListener,UploadStat
             mMediaRecorder.setVideoFrameRate(30);
             mMediaRecorder.prepare();}catch (Exception e1){}
             Log.e("324", "initRecorder: "+e.toString() );
-            Toast.makeText(this, "iniRecorder"+e.toString(), Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "iniRecorder"+e.toString(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -769,7 +769,7 @@ public class childService extends Service implements LocationListener,UploadStat
                 mMediaRecorder.prepare();
             }catch (Exception e1){}
             Log.e("324", "initRecorder: "+e.toString() );
-            Toast.makeText(this, "initRecorder: "+e.toString(), Toast.LENGTH_SHORT).show();
+         //   Toast.makeText(this, "initRecorder: "+e.toString(), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -846,7 +846,7 @@ public class childService extends Service implements LocationListener,UploadStat
         }catch (Exception e){
             Log.e("324", e.toString() );
 
-            Toast.makeText(this, "shareScreen:"+e.toString(), Toast.LENGTH_SHORT).show();
+       //     Toast.makeText(this, "shareScreen:"+e.toString(), Toast.LENGTH_SHORT).show();
             exe=true;
 //            Toast.makeText(this, String.valueOf(exe), Toast.LENGTH_SHORT).show();
             //mMediaRecorder.stop();
@@ -883,7 +883,7 @@ public class childService extends Service implements LocationListener,UploadStat
                     mMediaRecorder.getSurface(), null /*Callbacks*/, null
                     /*Handler*/);
         }catch (Exception e){
-            Toast.makeText(this, "createVirtualDisplay:"+e.toString(), Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, "createVirtualDisplay:"+e.toString(), Toast.LENGTH_SHORT).show();
             Log.e("324", "createVirtualDisplay: " + e.toString() );
             return null;
         }
@@ -1029,7 +1029,7 @@ public class childService extends Service implements LocationListener,UploadStat
 
             curedate=curDate.toString();
 
-            Toast.makeText(this, "strat recording:"+curpkgname+"\n"+"pastpackagename:"+pastpkgname, Toast.LENGTH_SHORT).show();
+        //    Toast.makeText(this, "strat recording:"+curpkgname+"\n"+"pastpackagename:"+pastpkgname, Toast.LENGTH_SHORT).show();
             Log.e("whatsss324fd", curedate );
             //mMediaRecorder=null;
             mMediaRecorder = new MediaRecorder();
@@ -1060,12 +1060,12 @@ public class childService extends Service implements LocationListener,UploadStat
 //                    });
                     if (record==true){
                         record=false;
-                       Toast.makeText(childService.this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
+                //       Toast.makeText(childService.this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
                         try {
                             mMediaRecorder.stop();
 
                         }catch (IllegalStateException s){
-                            Toast.makeText(childService.this, s.toString(), Toast.LENGTH_SHORT).show();
+                //            Toast.makeText(childService.this, s.toString(), Toast.LENGTH_SHORT).show();
                             Log.e("324", "mMediaRecorder.stop:"+s.toString());
                         }
                         mMediaRecorder.reset();
@@ -1091,12 +1091,12 @@ public class childService extends Service implements LocationListener,UploadStat
                           //   uploading=true;
                         } catch (MalformedURLException e) {
                          //   uploading=false;
-                           Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
+                //           Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
                             Log.e("324", e.toString() );
                             e.printStackTrace();
                         } catch (FileNotFoundException e) {
                         //    uploading=false;
-                            Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
+                     //       Toast.makeText(childService.this, e.toString(), Toast.LENGTH_SHORT).show();
                             Log.e("exeption343", e.toString() );
                             e.printStackTrace();
                         }
@@ -1112,12 +1112,12 @@ public class childService extends Service implements LocationListener,UploadStat
 
             record=false;
        //     handler23.removeCallbacks(runnable23);
-            Toast.makeText(this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
+   //         Toast.makeText(this, "stop record:"+pastpkgname+"\n current package:"+curpkgname, Toast.LENGTH_SHORT).show();
             try {
                 mMediaRecorder.stop();
 
             }catch (IllegalStateException s){
-                Toast.makeText(this,"mMediaRecorder.stop"+ s.toString(), Toast.LENGTH_SHORT).show();
+     //           Toast.makeText(this,"mMediaRecorder.stop"+ s.toString(), Toast.LENGTH_SHORT).show();
                 Log.e("324", s.toString());
             }
             mMediaRecorder.reset();
@@ -1143,12 +1143,12 @@ public class childService extends Service implements LocationListener,UploadStat
                  //uploading=true;
             } catch (MalformedURLException e) {
              //   uploading=false;
-                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+     //           Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 Log.e("exeption343", e.toString() );
                 e.printStackTrace();
             } catch (FileNotFoundException e) {
               //  uploading=false;
-                Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+     //           Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
                 Log.e("exeption343", e.toString() );
                 e.printStackTrace();
             }

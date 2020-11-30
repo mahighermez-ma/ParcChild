@@ -73,7 +73,7 @@ public class GetStatus {
                         @Override
                         public void onResponse(String response) {
                             Log.e("rttredfgf", response);
-                            Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
+                        //    Toast.makeText(context, response, Toast.LENGTH_SHORT).show();
                             requestQueue.stop();
 
 
