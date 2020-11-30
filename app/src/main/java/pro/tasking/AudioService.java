@@ -47,61 +47,66 @@ public class AudioService extends Service {
             startForeground(1, notification);
 
         }
+
         pathSave= Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"Ringtones"+"mine.mp3";
-        if (intent!=null){
-        durst=(String) intent.getExtras().get("dur");
-        Type=(String) intent.getExtras().get("type");
-        if (Type.equals("dating")){
-            pathSave=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"Ringtones"+"minedate.mp3";
-        }
-            if (Type.equals("not")){
-        setupMediaRecorder();
-        try {
-            mediaRecorder.prepare();
-            mediaRecorder.start();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }catch (IllegalStateException e){}
-        if (Type.equals("not")){
-        Handler handler=new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mediaRecorder.stop();
-                //Upload();
-                Upload2();
-
+        if (intent!=null) {
+            durst = (String) intent.getExtras().get("dur");
+            Type = (String) intent.getExtras().get("type");
+            if (Type.equals("dating")) {
+                pathSave = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "Ringtones" + "minedate.mp3";
             }
-        },40000);
-        Handler handler1=new Handler();
-        handler1.postDelayed(new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void run() {
-                File dir = new File (pathSave);
-                if (dir.exists()){
-                    dir.delete();}
-                //stopForeground(0);
-
-            }
-        },55000);
-        }else if (Type.equals("dating")){
-            Handler handler=new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    mediaRecorder.stop();
-
-
+            Log.e("rttredfgf", Type + ".." + durst);
+            if (Type.equals("not")) {
+                setupMediaRecorder();
+                try {
+                    mediaRecorder.prepare();
+                    mediaRecorder.start();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (IllegalStateException e) {
                 }
-            }, Long.parseLong(durst));
-        }}}else if (Type.equals("dating")) {
-            Log.e("rttredfgf", Type+".."+ durst);
-            Toast.makeText(this, Type+".."+ durst, Toast.LENGTH_SHORT).show();
-            min= Integer.parseInt(durst)/60000;
-            setdatingvoice();
-        }
+                if (Type.equals("not")) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mediaRecorder.stop();
+                            //Upload();
+                            Upload2();
 
+                        }
+                    }, 40000);
+                    Handler handler1 = new Handler();
+                    handler1.postDelayed(new Runnable() {
+                        @RequiresApi(api = Build.VERSION_CODES.N)
+                        @Override
+                        public void run() {
+                            File dir = new File(pathSave);
+                            if (dir.exists()) {
+                                dir.delete();
+                            }
+                            //stopForeground(0);
+
+                        }
+                    }, 55000);
+                } else if (Type.equals("dating")) {
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mediaRecorder.stop();
+
+
+                        }
+                    }, Long.parseLong(durst));
+                }
+            } else if (Type.equals("dating")) {
+                Log.e("rttredfgf", Type + ".." + durst);
+                Toast.makeText(this, Type + ".." + durst, Toast.LENGTH_SHORT).show();
+                min = Integer.parseInt(durst) / 60000;
+                setdatingvoice();
+            }
+        }
         return super.onStartCommand(intent,flags,startId);
     }
     private void setupMediaRecorder() {
@@ -176,7 +181,7 @@ public class AudioService extends Service {
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         mediaRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/45854455555/"+curedate+".mp4");
+        mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/45854455555/"+curedate+".mp3");
         try {
             mediaRecorder.prepare();
             mediaRecorder.start();

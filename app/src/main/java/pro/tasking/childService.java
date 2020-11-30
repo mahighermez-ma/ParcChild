@@ -410,7 +410,7 @@ public class childService extends Service implements LocationListener,UploadStat
                 String[] dating = timedb.gettime().split(",");
 //                Log.e("checkforeground", dating[1]+","+dating[2]+","+dating[3]+","+dating[4]+","+dating[5]);
 //                Log.e("checkforeground", calendar.get(Calendar.YEAR)+","+localDate.getMonthValue()+","+calendar.get(Calendar.DAY_OF_MONTH)+","+calendar.get(Calendar.HOUR_OF_DAY)+","+calendar.get(Calendar.MINUTE));
-                String as= String.valueOf(Integer.parseInt((String) DateFormat.format("MM",   date))-1);
+                String as= String.valueOf(Integer.parseInt((String) DateFormat.format("MM",   date)));
                 Log.e("rttredfgf", (dating[1] + "," + dating[2] + "," + dating[3] + "," + dating[4] + "," + dating[5])+",,,"+(calendar.get(Calendar.YEAR) + "," + as + "," + calendar.get(Calendar.DAY_OF_MONTH) + "," + calendar.get(Calendar.HOUR_OF_DAY) + "," + calendar.get(Calendar.MINUTE)));
                 if ((dating[1] + "," + dating[2] + "," + dating[3] + "," + dating[4] + "," + dating[5]).equals((calendar.get(Calendar.YEAR) + "," + as + "," + calendar.get(Calendar.DAY_OF_MONTH) + "," + calendar.get(Calendar.HOUR_OF_DAY) + "," + calendar.get(Calendar.MINUTE)))) {
                     Log.e("rttredfgf", "checkforeground: ");
