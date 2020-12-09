@@ -30,8 +30,7 @@ public class AudioService extends Service {
     int min;
     private String curedate;
 
-    public AudioService() {
-    }
+    public AudioService() {}
 
     @Override
     public IBinder onBind(Intent intent) {

